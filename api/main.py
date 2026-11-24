@@ -25,13 +25,6 @@ from typing import Optional
 from fastapi import FastAPI, Query
 from psycopg2.extras import RealDictCursor
 from fastapi.middleware.cors import CORSMiddleware
-
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["http://localhost:5173"],
-#     allow_methods=["GET"],
-#     allow_headers=["*"],
-# )
 from api.sync_incidents import TABLE, get_connection
 
 app = FastAPI(title="Cambridge Incidents API (from Postgres)")
