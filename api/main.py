@@ -32,13 +32,14 @@ from fastapi.middleware.cors import CORSMiddleware
 #     allow_methods=["GET"],
 #     allow_headers=["*"],
 # )
-from sync_incidents import TABLE, get_connection
+from api.sync_incidents import TABLE, get_connection
 
 app = FastAPI(title="Cambridge Incidents API (from Postgres)")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=["http://localhost:5173",
+                   "https://crime-dashboard-kappa.vercel.app/"],
     allow_methods=["GET"],
     allow_headers=["*"],
 )
@@ -78,6 +79,9 @@ def run_query(sql: str, params: tuple = ()) -> list[dict]:
     finally:
         conn.close()
 
+@app.get("/")
+def home():
+    return {"message": "Welcome to cambridge crime dashbaord backend service"}
 
 @app.get("/incidents/last/{period}")
 def incidents_last(period: Period):
